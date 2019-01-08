@@ -14,4 +14,4 @@ App.get('/products', async (req, res) => {
   res.json(products);
 });
 
-App.listen(3000, () => console.log('The server has started'));
+App.listen(5001, () => console.log('The server has started on port 5001'));
