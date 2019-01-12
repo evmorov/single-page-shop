@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const Product = require('./models/product');
 
 const app = express();
-const port = 5001;
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -32,4 +31,6 @@ app.route('/products/:id')
     res.json(product);
   });
 
-app.listen(port, () => console.log(`The server has started on port ${port}`));
+app.listen(process.env.SERVER_PORT, () => (
+  console.log(`The server has started on port ${process.env.SERVER_PORT}`)
+));
