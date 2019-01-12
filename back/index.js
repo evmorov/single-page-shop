@@ -27,8 +27,12 @@ app.route('/products')
 
 app.route('/products/:id')
   .get(async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    res.json(product);
+    try {
+      const product = await Product.findById(req.params.id);
+      res.json(product);
+    } catch (e) {
+      res.status(404).end();
+    }
   });
 
 app.listen(process.env.SERVER_PORT, () => (
