@@ -21,7 +21,9 @@ app.route('/products')
     res.json(products);
   })
   .post(async (req, res) => {
-    const product = await Product.create(req.body.product);
+    const { title, description, price, images } = req.body.product;
+    const product = await Product.create({ title, description, price, images });
+
     res.json(product);
   });
 
