@@ -23,7 +23,6 @@ app.route('/products')
   .post(async (req, res) => {
     const { title, description, price, images } = req.body.product;
     const product = await Product.create({ title, description, price, images });
-
     res.json(product);
   });
 
@@ -31,6 +30,26 @@ app.route('/products/:id')
   .get(async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
+      res.json(product);
+    } catch (e) {
+      res.status(404).end();
+    }
+  })
+  .put(async (req, res) => {
+    const { title, description, price, images } = req.body.product;
+    try {
+      const product = await Product.findByOneAndUpdate(
+        { _id: req.params.id },
+        { title, description, price, images }
+      );
+      res.json(product);
+    } catch (e) {
+      res.status(404).end();
+    }
+  })
+  .delete(async (req, res) => {
+    try {
+      const product = await Product.findByIdAndDelete(req.params.id);
       res.json(product);
     } catch (e) {
       res.status(404).end();
