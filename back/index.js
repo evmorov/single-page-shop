@@ -1,17 +1,16 @@
-require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const Product = require('./models/product');
+const config = require('./config');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+mongoose.connect(config.db, { useNewUrlParser: true });
 
 app.route('/products')
   .get(async (req, res) => {
@@ -54,6 +53,6 @@ app.route('/products/:id')
     }
   });
 
-app.listen(process.env.SERVER_PORT, () => (
-  console.log(`The server has started on port ${process.env.SERVER_PORT}`)
+app.listen(config.port, () => (
+  console.log(`The server has started on port ${config.port}`)
 ));
