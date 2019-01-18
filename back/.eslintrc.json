@@ -3,6 +3,7 @@
     "airbnb-base"
   ],
   "plugins": [
+    "mocha",
     "chai-friendly"
   ],
   "env": {
@@ -22,6 +23,8 @@
     "import/prefer-default-export": "off",
     "import/no-dynamic-require": "off",
     "no-unused-expressions": 0,
-    "chai-friendly/no-unused-expressions": 2
+    "chai-friendly/no-unused-expressions": 2,
+    "prefer-arrow-callback": 0,
+    "mocha/prefer-arrow-callback": 2
   }
 }

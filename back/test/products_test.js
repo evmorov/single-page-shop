@@ -5,15 +5,14 @@ const app = require('../index');
 
 const { expect } = chai;
 
-describe('Products', () => {
-  describe('#GET / products', () => {
-    it('returns empty array when no products', (done) => {
+describe('Products', function() {
+  describe('#GET / products', function() {
+    it('returns empty array when no products', function() {
       request(app).get('/products')
         .end((err, res) => {
           expect(res.statusCode).to.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.be.empty;
-          done();
         });
     });
   });
