@@ -56,3 +56,5 @@ app.route('/products/:id')
 app.listen(config.port, () => (
   console.log(`The server has started on port ${config.port}`)
 ));
+
+module.exports = app;
