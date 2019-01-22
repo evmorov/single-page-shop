@@ -12,6 +12,21 @@ app.use(bodyParser.json());
 
 mongoose.connect(config.db, { useNewUrlParser: true });
 
+const fetchProduct = async (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).end();
+    return;
+  }
+
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    req.product = product;
+    next();
+  } else {
+    res.status(404).end();
+  }
+};
+
 app.route('/products')
   .get(async (req, res) => {
     const products = await Product.find();
@@ -24,13 +39,8 @@ app.route('/products')
   });
 
 app.route('/products/:id')
-  .get(async (req, res) => {
-    try {
-      const product = await Product.findById(req.params.id);
-      res.json(product);
-    } catch (e) {
-      res.status(404).end();
-    }
+  .get(fetchProduct, async (req, res) => {
+    res.json(req.product);
   })
   .put(async (req, res) => {
     const { title, description, price, images } = req.body.product;
