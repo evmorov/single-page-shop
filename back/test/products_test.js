@@ -52,6 +52,7 @@ describe('Products', function() {
         request(app).get('/products/1')
           .end((err, res) => {
             expect(res.statusCode).to.equal(400);
+            expect(res.body).to.deep.equal({});
             done();
           });
       });
@@ -62,6 +63,7 @@ describe('Products', function() {
         request(app).get('/products/5c34fbfd608700dc5f5ef589')
           .end((err, res) => {
             expect(res.statusCode).to.equal(404);
+            expect(res.body).to.deep.equal({});
             done();
           });
       });
