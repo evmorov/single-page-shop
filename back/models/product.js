@@ -23,6 +23,16 @@ const ProductSchema = new mongoose.Schema({
   }
 });
 
+ProductSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    /* eslint-disable */
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+    /* eslint-enable */
+  }
+});
+
 const Product = mongoose.model('Product', ProductSchema);
 
 module.exports = Product;

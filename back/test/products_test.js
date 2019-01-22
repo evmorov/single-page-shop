@@ -33,7 +33,7 @@ describe('Products', function() {
             expect(res.statusCode).to.equal(200);
             expect(res.body).to.be.an('array');
             expect(res.body).to.have.lengthOf(3);
-            const keys = ['_id', '__v', 'title', 'description', 'price', 'images', 'createdAt'];
+            const keys = ['id', 'title', 'description', 'price', 'images', 'createdAt'];
             res.body.forEach(product => expect(product).to.have.all.keys(keys));
             done();
           });
