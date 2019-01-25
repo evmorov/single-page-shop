@@ -11,8 +11,10 @@
   },
   "scripts": {
     "server": "nodemon index.js",
-    "lint": "eslint --ignore-path .gitignore .",
-    "test": "NODE_ENV=test mocha --exit"
+    "serverd": "nodemon --inspect=127.0.0.1:9229 index.js",
+    "test": "NODE_ENV=test mocha --exit",
+    "testd": "NODE_ENV=test mocha --inspect=127.0.0.1:9300 --exit",
+    "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
     "chai": "^4.2.0",
