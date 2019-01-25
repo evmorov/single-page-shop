@@ -54,13 +54,9 @@ app.route('/products/:id')
       res.status(404).end();
     }
   })
-  .delete(async (req, res) => {
-    try {
-      const product = await Product.findByIdAndDelete(req.params.id);
-      res.json(product);
-    } catch (e) {
-      res.status(404).end();
-    }
+  .delete(fetchProduct, async (req, res) => {
+    const product = await req.product.remove();
+    res.json(product);
   });
 
 app.listen(config.port, () => (
