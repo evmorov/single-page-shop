@@ -104,6 +104,8 @@ describe('Products', function() {
       });
 
       it('destroys the product and returns it', async function() {
+        expect(await Product.findById(product._id)).to.not.be.null;
+
         const deleteRes = await request(app).delete(`/products/${product._id}`);
         expect(deleteRes.statusCode).to.equal(200);
         const actualProduct = deleteRes.body;
@@ -113,9 +115,7 @@ describe('Products', function() {
         expect(actualProduct.price).to.equal(product.price);
         expect(actualProduct.images).to.deep.equal(product.images);
 
-        const getRes = await request(app).get(`/products/${product._id}`);
-        expect(getRes.statusCode).to.equal(404);
-        expect(getRes.body).to.deep.equal({});
+        expect(await Product.findById(product._id)).to.be.null;
       });
 
       after(async function() { await Product.deleteMany({}); });
