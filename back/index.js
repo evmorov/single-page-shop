@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 mongoose.connect(config.db, { useNewUrlParser: true });
 
-const fetchProduct = async (req, res, next) => {
+const fetchProductByReqId = async (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).end();
     return;
@@ -39,7 +39,7 @@ app.route('/products')
   });
 
 app.route('/products/:id')
-  .get(fetchProduct, async (req, res) => {
+  .get(fetchProductByReqId, async (req, res) => {
     res.json(req.product);
   })
   .put(async (req, res) => {
@@ -54,7 +54,7 @@ app.route('/products/:id')
       res.status(404).end();
     }
   })
-  .delete(fetchProduct, async (req, res) => {
+  .delete(fetchProductByReqId, async (req, res) => {
     const product = await req.product.remove();
     res.json(product);
   });
