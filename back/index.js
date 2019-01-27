@@ -27,15 +27,31 @@ const fetchProductByReqId = async (req, res, next) => {
   }
 };
 
+const fetchProductParams = (req, res, next) => {
+  const productParams = req.body.product;
+  if (!productParams) {
+    res.status(400).end();
+    return;
+  }
+
+  req.productParams = productParams;
+  next();
+};
+
 app.route('/products')
   .get(async (req, res) => {
     const products = await Product.find();
     res.json(products);
   })
-  .post(async (req, res) => {
-    const { title, description, price, images } = req.body.product;
-    const product = await Product.create({ title, description, price, images });
-    res.json(product);
+  .post(fetchProductParams, async (req, res) => {
+    const { title, description, price, images } = req.productParams;
+    try {
+      const product = await Product.create({ title, description, price, images });
+      res.status(201).json(product);
+    } catch (e) {
+      // TODO: make a response with all validation errors
+      res.status(400).end();
+    }
   });
 
 app.route('/products/:id')
