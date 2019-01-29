@@ -118,12 +118,60 @@ describe('Products', function() {
         expect(res.statusCode).to.equal(201);
         const responseProduct = res.body;
         checkProduct(responseProduct, productParams);
-
         expect(await Product.countDocuments()).to.equal(1);
+
         const createdProduct = (await Product.findById(responseProduct.id)).toJSON();
         checkProduct(createdProduct, productParams);
       });
+
+      afterEach(async function() { await Product.deleteMany({}); });
     });
+  });
+
+  describe('#PUT /product/:id', function() {
+    let product = null;
+
+    beforeEach(async function() {
+      product = await Product.create({ title: 'aaa', description: 'bbb', price: 1, images: [] });
+    });
+
+    describe('empty request', function() {
+      it('returns 400 and empty body', async function() {
+        const res = await request(app).put(`/products/${product._id}`).send({});
+
+        expect(res.statusCode).to.equal(400);
+        expect(res.body).to.deep.equal({});
+        expect(await Product.countDocuments()).to.equal(1);
+      });
+    });
+
+    describe('empty product in request', function() {
+      // TODO: check validation errors
+      it('returns 400 and empty body', async function() {
+        const res = await request(app).put(`/products/${product._id}`).send({ product: {} });
+
+        expect(res.statusCode).to.equal(400);
+        expect(res.body).to.deep.equal({});
+        expect(await Product.countDocuments()).to.equal(1);
+      });
+    });
+
+    describe('product params are valid', function() {
+      it('returns 200 and updated product', async function() {
+        const productParams = { title: 'zzz', description: 'xxx', price: 7, images: [] };
+        const res = await request(app).put(`/products/${product._id}`).send({ product: productParams });
+
+        expect(res.statusCode).to.equal(200);
+        const responseProduct = res.body;
+        checkProduct(responseProduct, productParams);
+        expect(await Product.countDocuments()).to.equal(1);
+
+        const updatedProduct = (await Product.findById(responseProduct.id)).toJSON();
+        checkProduct(updatedProduct, productParams);
+      });
+    });
+
+    afterEach(async function() { await Product.deleteMany({}); });
   });
 
   describe('#DELETE /product/:id', function() {

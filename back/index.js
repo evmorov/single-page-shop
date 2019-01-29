@@ -45,30 +45,33 @@ app.route('/products')
   })
   .post(fetchProductParams, async (req, res) => {
     const { title, description, price, images } = req.productParams;
+    let product = null;
     try {
-      const product = await Product.create({ title, description, price, images });
-      res.status(201).json(product);
+      product = await Product.create({ title, description, price, images });
     } catch (e) {
-      // TODO: make a response with all validation errors
-      res.status(400).end();
+      res.status(400).end(); // TODO: make a response with all validation errors
+      return;
     }
+    res.status(201).json(product);
   });
 
 app.route('/products/:id')
   .get(fetchProductByReqId, async (req, res) => {
     res.json(req.product);
   })
-  .put(async (req, res) => {
-    const { title, description, price, images } = req.body.product;
+  .put([fetchProductByReqId, fetchProductParams], async (req, res) => {
+    const { product } = req;
+    product.title = req.productParams.title;
+    product.description = req.productParams.description;
+    product.price = req.productParams.price;
+    product.images = req.productParams.images;
     try {
-      const product = await Product.findByOneAndUpdate(
-        { _id: req.params.id },
-        { title, description, price, images }
-      );
-      res.json(product);
+      await product.save();
     } catch (e) {
-      res.status(404).end();
+      res.status(400).end(); // TODO: make a response with all validation errors
+      return;
     }
+    res.json(product);
   })
   .delete(fetchProductByReqId, async (req, res) => {
     const product = await req.product.remove();
