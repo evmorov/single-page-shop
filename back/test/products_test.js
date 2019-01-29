@@ -20,7 +20,7 @@ const checkProduct = (actualProduct, expectedProduct) => {
 
 describe('Products', function() {
   describe('#GET /products', function() {
-    describe('no products', function() {
+    context('no products', function() {
       it('returns empty array', async function() {
         const res = await request(app).get('/products');
 
@@ -30,7 +30,7 @@ describe('Products', function() {
       });
     });
 
-    describe('products exist', function() {
+    context('products exist', function() {
       before(async function() {
         await Product.create({ title: 'aaa', description: 'bbb', price: 1, images: [] });
         await Product.create({ title: 'ccc', description: 'ddd', price: 2, images: [] });
@@ -51,7 +51,7 @@ describe('Products', function() {
   });
 
   describe('#POST /products/', function() {
-    describe('empty request', function() {
+    context('empty request', function() {
       it('returns 400 and empty body', async function() {
         const res = await request(app).post('/products').send({});
 
@@ -61,7 +61,7 @@ describe('Products', function() {
       });
     });
 
-    describe('empty product in request', function() {
+    context('empty product in request', function() {
       // TODO: check validation errors
       it('returns 400 and empty body', async function() {
         const res = await request(app).post('/products').send({ product: {} });
@@ -72,7 +72,7 @@ describe('Products', function() {
       });
     });
 
-    describe('product params are valid', function() {
+    context('product params are valid', function() {
       it('returns 201 and created product', async function() {
         const productParams = { title: 'aaa', description: 'bbb', price: 1, images: [] };
         const res = await request(app).post('/products').send({ product: productParams });
@@ -91,7 +91,7 @@ describe('Products', function() {
   });
 
   describe('#GET /products/:id', function() {
-    describe('not valid id', function() {
+    context('not valid id', function() {
       it('returns 400 and empty body', async function() {
         const res = await request(app).get('/products/1');
 
@@ -100,7 +100,7 @@ describe('Products', function() {
       });
     });
 
-    describe('valid id but product is not found', function() {
+    context('valid id but product is not found', function() {
       it('returns 404 and empty body', async function() {
         const res = await request(app).get('/products/5c34fbfd608700dc5f5ef589');
 
@@ -109,7 +109,7 @@ describe('Products', function() {
       });
     });
 
-    describe('product is found', function() {
+    context('product is found', function() {
       let product = null;
 
       before(async function() {
@@ -135,7 +135,7 @@ describe('Products', function() {
       product = await Product.create({ title: 'aaa', description: 'bbb', price: 1, images: [] });
     });
 
-    describe('not valid id', function() {
+    context('not valid id', function() {
       it('returns 400 and empty body', async function() {
         const res = await request(app).get('/products/1');
 
@@ -144,7 +144,7 @@ describe('Products', function() {
       });
     });
 
-    describe('valid id but product is not found', function() {
+    context('valid id but product is not found', function() {
       it('returns 404 and empty body', async function() {
         const res = await request(app).get('/products/5c34fbfd608700dc5f5ef589');
 
@@ -153,7 +153,7 @@ describe('Products', function() {
       });
     });
 
-    describe('empty request', function() {
+    context('empty request', function() {
       it('returns 400 and empty body', async function() {
         const res = await request(app).put(`/products/${product._id}`).send({});
 
@@ -163,7 +163,7 @@ describe('Products', function() {
       });
     });
 
-    describe('empty product params in request', function() {
+    context('empty product params in request', function() {
       // TODO: check validation errors
       it('returns 400 and empty body', async function() {
         const res = await request(app).put(`/products/${product._id}`).send({ product: {} });
@@ -174,7 +174,7 @@ describe('Products', function() {
       });
     });
 
-    describe('product params are valid', function() {
+    context('product params are valid', function() {
       it('returns 200 and updated product', async function() {
         const productParams = { title: 'zzz', description: 'xxx', price: 7, images: [] };
         const res = await request(app).put(`/products/${product._id}`).send({ product: productParams });
@@ -193,7 +193,7 @@ describe('Products', function() {
   });
 
   describe('#DELETE /products/:id', function() {
-    describe('not valid id', function() {
+    context('not valid id', function() {
       it('returns 400 and empty body', async function() {
         const res = await request(app).delete('/products/1');
 
@@ -202,7 +202,7 @@ describe('Products', function() {
       });
     });
 
-    describe('valid id but product is not found', function() {
+    context('valid id but product is not found', function() {
       it('returns 404 and empty body', async function() {
         const res = await request(app).delete('/products/5c34fbfd608700dc5f5ef589');
 
@@ -211,7 +211,7 @@ describe('Products', function() {
       });
     });
 
-    describe('product is found', function() {
+    context('product is found', function() {
       let product = null;
 
       before(async function() {
