@@ -109,7 +109,7 @@ describe('Products', function() {
       });
     });
 
-    describe('valid id and product is found', function() {
+    describe('product is found', function() {
       let product = null;
 
       before(async function() {
@@ -135,6 +135,24 @@ describe('Products', function() {
       product = await Product.create({ title: 'aaa', description: 'bbb', price: 1, images: [] });
     });
 
+    describe('not valid id', function() {
+      it('returns 400 and empty body', async function() {
+        const res = await request(app).get('/products/1');
+
+        expect(res.statusCode).to.equal(400);
+        expect(res.body).to.deep.equal({});
+      });
+    });
+
+    describe('valid id but product is not found', function() {
+      it('returns 404 and empty body', async function() {
+        const res = await request(app).get('/products/5c34fbfd608700dc5f5ef589');
+
+        expect(res.statusCode).to.equal(404);
+        expect(res.body).to.deep.equal({});
+      });
+    });
+
     describe('empty request', function() {
       it('returns 400 and empty body', async function() {
         const res = await request(app).put(`/products/${product._id}`).send({});
@@ -145,7 +163,7 @@ describe('Products', function() {
       });
     });
 
-    describe('empty product in request', function() {
+    describe('empty product params in request', function() {
       // TODO: check validation errors
       it('returns 400 and empty body', async function() {
         const res = await request(app).put(`/products/${product._id}`).send({ product: {} });
@@ -193,7 +211,7 @@ describe('Products', function() {
       });
     });
 
-    describe('valid id and product is found', function() {
+    describe('product is found', function() {
       let product = null;
 
       before(async function() {
