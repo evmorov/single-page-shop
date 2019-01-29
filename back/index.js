@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -7,6 +8,7 @@ const config = require('./config');
 
 const app = express();
 
+app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
