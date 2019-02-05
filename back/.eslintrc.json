@@ -2,6 +2,14 @@
   "extends": [
     "airbnb-base"
   ],
+  "plugins": [
+    "mocha",
+    "chai-friendly"
+  ],
+  "env": {
+    "node": true,
+    "mocha": true
+  },
   "rules": {
     "no-console": "off",
     "no-plusplus": "off",
@@ -10,8 +18,13 @@
     "comma-dangle": "off",
     "func-names": "off",
     "space-before-function-paren": ["error", "never"],
-    "import/prefer-default-export": "off",
     "space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "import/prefer-default-export": "off",
+    "import/no-dynamic-require": "off",
+    "no-unused-expressions": 0,
+    "chai-friendly/no-unused-expressions": 2,
+    "prefer-arrow-callback": 0,
+    "mocha/prefer-arrow-callback": 2
   }
 }
