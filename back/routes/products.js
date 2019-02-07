@@ -14,7 +14,7 @@ router.route('/')
 
 router.route('/:id')
   .get(fetchProductByReqId, show)
-  .put([fetchProductByReqId, fetchProductParams], update)
+  .put(fetchProductByReqId, fetchProductParams, update)
   .delete(fetchProductByReqId, destroy);
 
 module.exports = router;
