@@ -8,7 +8,7 @@ const productsRouter = require('./routes/products');
 
 const app = express();
 
-app.use(morgan('tiny'));
+if (config.env === 'development') app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
