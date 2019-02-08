@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-plusplus": "off",
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "no-unused-vars": [1, {"vars": "all", "args": "after-used", "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "comma-dangle": "off",
+    "func-names": "off",
+    "space-before-function-paren": ["error", "never"],
+    "import/prefer-default-export": "off"
+  },
+  "settings": {
+    "import/resolver": "webpack",
+    "react": {
+      "version": "16.0"
+    }
+  }
+}

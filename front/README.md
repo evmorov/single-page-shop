@@ -1,0 +1,3 @@
+- start the server
+- `yarn start`
+- follow the instruction on the screen
