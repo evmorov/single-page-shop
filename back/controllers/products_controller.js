@@ -38,13 +38,7 @@ actions.index = async (req, res) => {
 
 actions.create = async (req, res) => {
   const { title, description, price, images } = req.productParams;
-  let product = null;
-  try {
-    product = await Product.create({ title, description, price, images });
-  } catch (e) {
-    res.status(400).end(); // TODO: make a response with all validation errors
-    return;
-  }
+  const product = await Product.create({ title, description, price, images });
   res.status(201).json(product);
 };
 
@@ -58,12 +52,7 @@ actions.update = async (req, res) => {
   product.description = req.productParams.description;
   product.price = req.productParams.price;
   product.images = req.productParams.images;
-  try {
-    await product.save();
-  } catch (e) {
-    res.status(400).end(); // TODO: make a response with all validation errors
-    return;
-  }
+  await product.save();
   res.json(product);
 };
 
