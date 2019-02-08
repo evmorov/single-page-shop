@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -9,6 +10,7 @@ const productsRouter = require('./routes/products');
 const app = express();
 
 if (config.env === 'development') app.use(morgan('tiny'));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
