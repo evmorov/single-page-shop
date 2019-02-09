@@ -1,7 +1,7 @@
 const express = require('express');
 
-const catchErrors = require('../utils/async_error_catcher');
-const productsController = require('../controllers/products_controller');
+const catchErrors = require('../utils/asyncErrorCatcher');
+const productsController = require('../controllers/productsController');
 
 const {
   filters: { fetchProductParams, fetchProductByReqId },
