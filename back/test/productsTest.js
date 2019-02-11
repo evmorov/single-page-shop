@@ -183,6 +183,7 @@ describe('Products', function() {
         expect(await Product.countDocuments()).to.equal(1);
 
         const updatedProduct = (await Product.findById(responseProduct.id)).toJSON();
+        expect(updatedProduct.updatedAt).to.not.equal(product.updatedAt);
         checkProduct(updatedProduct, productParams);
       });
     });
