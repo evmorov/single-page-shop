@@ -8,7 +8,7 @@ const Product = require('../models/product');
 
 const { expect } = chai;
 
-const productKeys = ['id', 'title', 'description', 'price', 'images', 'createdAt'];
+const productKeys = ['id', 'title', 'description', 'price', 'images', 'createdAt', 'updatedAt'];
 
 const checkProduct = (actualProduct, expectedProduct) => {
   expect(actualProduct).to.have.all.keys(productKeys);

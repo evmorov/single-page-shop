@@ -15,12 +15,11 @@ const ProductSchema = new mongoose.Schema({
   },
   images: {
     type: [String],
+    required: true,
     default: []
-  },
-  createdAt: {
-    type: Date,
-    default: new Date()
   }
+}, {
+  timestamps: true
 });
 
 ProductSchema.set('toJSON', {
