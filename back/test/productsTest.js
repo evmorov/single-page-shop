@@ -10,7 +10,7 @@ const { expect } = chai;
 
 const productKeys = ['id', 'title', 'description', 'price', 'images', 'createdAt', 'updatedAt'];
 
-const checkProduct = (actualProduct, expectedProduct) => {
+const productsEqual = (actualProduct, expectedProduct) => {
   expect(actualProduct).to.have.all.keys(productKeys);
   expect(actualProduct.title).to.equal(expectedProduct.title);
   expect(actualProduct.description).to.equal(expectedProduct.description);
@@ -78,11 +78,11 @@ describe('Products', function() {
 
         expect(res.statusCode).to.equal(201);
         const responseProduct = res.body;
-        checkProduct(responseProduct, productParams);
+        productsEqual(responseProduct, productParams);
         expect(await Product.countDocuments()).to.equal(1);
 
         const createdProduct = (await Product.findById(responseProduct.id)).toJSON();
-        checkProduct(createdProduct, productParams);
+        productsEqual(createdProduct, productParams);
       });
 
       afterEach(async function() { await Product.deleteMany({}); });
@@ -120,7 +120,7 @@ describe('Products', function() {
 
         expect(res.statusCode).to.equal(200);
         const responseProduct = res.body;
-        checkProduct(responseProduct, product);
+        productsEqual(responseProduct, product);
       });
 
       after(async function() { await Product.deleteMany({}); });
@@ -179,12 +179,12 @@ describe('Products', function() {
 
         expect(res.statusCode).to.equal(200);
         const responseProduct = res.body;
-        checkProduct(responseProduct, productParams);
+        productsEqual(responseProduct, productParams);
         expect(await Product.countDocuments()).to.equal(1);
 
         const updatedProduct = (await Product.findById(responseProduct.id)).toJSON();
         expect(updatedProduct.updatedAt).to.not.equal(product.updatedAt);
-        checkProduct(updatedProduct, productParams);
+        productsEqual(updatedProduct, productParams);
       });
     });
 
@@ -224,7 +224,7 @@ describe('Products', function() {
 
         expect(deleteRes.statusCode).to.equal(200);
         const responseProduct = deleteRes.body;
-        checkProduct(responseProduct, product);
+        productsEqual(responseProduct, product);
         expect(await Product.findById(product._id)).to.be.null;
       });
 
