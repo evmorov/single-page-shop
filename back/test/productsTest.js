@@ -62,7 +62,7 @@ describe('Products', function() {
     });
 
     context('empty product in request', function() {
-      it('returns 400 and empty body', async function() {
+      it('returns 422 and empty body', async function() {
         const res = await request(app).post('/products').send({ product: {} });
 
         expect(res.statusCode).to.equal(422);
@@ -163,7 +163,7 @@ describe('Products', function() {
     });
 
     context('empty product params in request', function() {
-      it('returns 400 and empty body', async function() {
+      it('returns 422 and empty body', async function() {
         const res = await request(app).put(`/products/${product._id}`).send({ product: {} });
 
         expect(res.statusCode).to.equal(422);
