@@ -1,7 +1,38 @@
 const mongoose = require('mongoose');
+const faker = require('faker');
+const text2png = require('text2png');
+const fs = require('fs');
+const path = require('path');
 
 const config = require('./../config');
 const Product = require('./../models/product');
+
+const generateImage = (text) => {
+  const imageName = faker.random.uuid();
+  const imagePath = path.join(__dirname, '..', 'public', 'tmp', 'images', `${imageName}.png`);
+
+  // text2png doesn't support sizing or ratio
+  // https://github.com/tkrkt/text2png/issues/22
+  // the code will generate 583 x 473px image with text with length of 8
+  const image = text2png(text, {
+    bgColor: faker.internet.color(),
+    textColor: 'white',
+    paddingTop: 200,
+    paddingRight: 50,
+    paddingBottom: 200,
+    paddingLeft: 50,
+    font: '100px sans-serif'
+  });
+  fs.writeFileSync(imagePath, image);
+
+  return `http://localhost:${config.port}/tmp/images/${imageName}.png`;
+};
+
+const generateImages = (text, count) => (
+  [...Array(count)].map((_, i) => (
+    generateImage(`${text} ${i + 1}`)
+  ))
+);
 
 module.exports.run = async () => {
   console.log('Seeding...');
@@ -10,38 +41,17 @@ module.exports.run = async () => {
 
   await Product.deleteMany({});
 
-  await Product.create({
-    title: 'Bread',
-    price: 10,
-    images: [
-      `http://localhost:${config.port}/images/seeds/bread1.jpg`,
-      `http://localhost:${config.port}/images/seeds/bread2.jpg`,
-      `http://localhost:${config.port}/images/seeds/bread3.jpg`,
-      `http://localhost:${config.port}/images/seeds/bread4.jpg`,
-      `http://localhost:${config.port}/images/seeds/bread5.jpg`
-    ],
-    description: 'Nulla gravida pharetra ornare. Sed fermentum urna a lorem sagittis, vel viverra nulla cursus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec lobortis maximus eros, non pharetra orci consequat in. In feugiat, ex quis accumsan consequat, urna mauris congue mi, in pharetra diam erat vitae odio. Pellentesque ultricies ipsum dolor, nec tempus magna dictum laoreet. Curabitur vel ex non orci eleifend tincidunt egestas vitae metus. Curabitur quis purus nunc. Aliquam rutrum nec risus lacinia viverra. Aenean in libero ligula. Vestibulum arcu justo, eleifend vel ligula nec, lobortis dictum elit. Cras feugiat suscipit nisi quis suscipit. Quisque nulla tortor, sagittis at libero egestas, imperdiet consectetur dui. Nulla dapibus eros non est cursus pretium. Sed quis arcu imperdiet, egestas urna et, pharetra tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
-  });
+  await Promise.all([...Array(5)].map(async (_, i) => {
+    // product name with the same length to make images with the same ratio
+    const productName = `Product${i + 1}`;
 
-  await Product.create({
-    title: 'Cheese',
-    price: 25,
-    images: [
-      `http://localhost:${config.port}/images/seeds/cheese1.jpg`,
-      `http://localhost:${config.port}/images/seeds/cheese2.jpg`,
-      `http://localhost:${config.port}/images/seeds/cheese3.jpg`
-    ],
-    description: 'Maecenas vitae ipsum sollicitudin, dapibus est porttitor, ultricies augue. Donec ac molestie dolor. Etiam gravida pellentesque diam eu consectetur. Sed pulvinar ante vel sodales pretium. Donec tempus tempus maximus. In dapibus leo sit amet urna dignissim, sit amet interdum sem hendrerit. Quisque tempus egestas ipsum, vitae iaculis augue faucibus non. Vestibulum lobortis fringilla semper. Praesent molestie, erat nec rutrum maximus, orci nunc fringilla nisl, in volutpat justo ex egestas est. Mauris lobortis urna at gravida fringilla. Morbi massa nibh, condimentum sit amet nisl a, maximus malesuada tortor. Morbi lobortis nulla a massa rhoncus consectetur. Vestibulum convallis purus at risus scelerisque, a sodales elit iaculis. Proin sit amet pulvinar lacus, mollis ultrices diam. Curabitur scelerisque pretium ex, nec tempor urna venenatis ut. Nullam porta mauris nec mi imperdiet, in tincidunt elit condimentum.'
-  });
-
-  await Product.create({
-    title: 'Meat',
-    price: 40,
-    images: [
-      `http://localhost:${config.port}/images/seeds/meat1.jpg`
-    ],
-    description: 'Nam a dui pulvinar libero semper accumsan. Cras condimentum in ligula eu volutpat. Aliquam vel libero non justo ultricies volutpat eget in ex. Aliquam eget ex tellus. Pellentesque molestie nunc sit amet nisl dictum bibendum. Sed ac porta metus. Suspendisse sagittis erat iaculis libero pulvinar efficitur. Curabitur ultricies feugiat leo, ac vehicula nisl ultricies et.'
-  });
+    await Product.create({
+      title: productName,
+      price: faker.commerce.price(),
+      images: generateImages(productName, faker.random.number({ min: 1, max: 6 })),
+      description: faker.lorem.paragraphs()
+    });
+  }));
 
   mongoose.disconnect();
 
