@@ -41,7 +41,9 @@ class ImageWithPreviews extends Component {
         )}
       />
 
-      <Card.Group itemsPerRow={3}>
+      <Card.Group
+        itemsPerRow={3}
+        style={{ marginTop: 12.5 }}>
         {
           images.map((image, index) => (
             <Card
