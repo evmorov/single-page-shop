@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore ."
+    "lint": "eslint --ignore-path .gitignore ."
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-import-resolver-webpack": "^0.10.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
