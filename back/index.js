@@ -10,6 +10,7 @@ const productsRouter = require('./routes/products');
 const app = express();
 
 if (config.env === 'development') app.use(morgan('tiny'));
+app.disable('x-powered-by');
 app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
