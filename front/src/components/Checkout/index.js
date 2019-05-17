@@ -7,8 +7,6 @@ const stateToProps = state => ({
   products: state.cart.products
 });
 
-const actionsToProps = dispatch => ({
-  createOrder: phone => dispatch(createOrder(phone))
-});
+const actionsToProps = { createOrder };
 
 export default connect(stateToProps, actionsToProps)(Checkout);

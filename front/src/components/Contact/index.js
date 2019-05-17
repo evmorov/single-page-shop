@@ -9,8 +9,6 @@ const stateToProps = state => ({
   contactSent: state.contact.contactSent
 });
 
-const actionsToProps = dispatch => ({
-  createContact: (email, message) => dispatch(createContact(email, message))
-});
+const actionsToProps = { createContact };
 
 export default connect(stateToProps, actionsToProps)(Contact);

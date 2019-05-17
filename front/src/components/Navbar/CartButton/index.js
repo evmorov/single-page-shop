@@ -11,8 +11,6 @@ const stateToProps = state => ({
   totalQuantity: totalQuantity(state.cart.products)
 });
 
-const actionsToProps = dispatch => ({
-  addToCart: (product, options) => dispatch(addToCart(product, options))
-});
+const actionsToProps = { addToCart };
 
 export default connect(stateToProps, actionsToProps)(CartButton);
