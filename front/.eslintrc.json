@@ -21,6 +21,7 @@
   },
   "settings": {
     "import/resolver": "webpack",
+    "import/core-modules": ["path"],
     "react": {
       "version": "16.0"
     }
