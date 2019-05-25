@@ -71,7 +71,9 @@ ImageWithPreviews.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.string
   ).isRequired,
-  alt: PropTypes.string.isRequired
+  alt: PropTypes.string.isRequired,
+  canOpenModal: PropTypes.bool.isRequired,
+  selected: PropTypes.number
 };
 
 export default ImageWithPreviews;

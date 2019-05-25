@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 
 import productType from '~/src/propTypes/productType';
@@ -47,7 +48,8 @@ class AddToCart extends Component {
 }
 
 AddToCart.propTypes = {
-  product: productType.isRequired
+  product: productType.isRequired,
+  addToCart: PropTypes.func.isRequired
 };
 
 export default AddToCart;

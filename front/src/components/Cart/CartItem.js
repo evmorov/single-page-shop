@@ -20,7 +20,10 @@ const CartItem = ({
 );
 
 CartItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   quantity: PropTypes.number.isRequired

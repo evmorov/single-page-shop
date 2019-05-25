@@ -11,7 +11,10 @@ const DeleteFromCart = ({ id, deleteFromCart }) => (
 );
 
 DeleteFromCart.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   deleteFromCart: PropTypes.func.isRequired
 };
 

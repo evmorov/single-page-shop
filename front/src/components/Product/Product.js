@@ -30,7 +30,10 @@ const Product = ({ product, error }) => {
 };
 
 Product.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   error: PropTypes.bool.isRequired,
   product: productType
 };
