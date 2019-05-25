@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:12.2.0
       - image: circleci/mongo:4.0.5
     steps:
-      - cd back/
+      - run: cd back/
       - checkout
       - restore_cache:
           keys:
