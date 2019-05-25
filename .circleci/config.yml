@@ -1,26 +1,19 @@
 version: 2
-
 jobs:
   build:
     docker:
       - image: circleci/node:12.2.0
       - image: circleci/mongo:4.0.5
-
-    working_directory: ~/back
-
     steps:
+      - cd back/
       - checkout
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-
       - run: yarn install
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - run: yarn test
