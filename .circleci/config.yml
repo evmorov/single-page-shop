@@ -4,9 +4,10 @@ jobs:
     docker:
       - image: circleci/node:12.2.0
       - image: circleci/mongo:4.0.5
+    working_directory: ~/single-page-shop/back
     steps:
-      - checkout
-      - run: cd back/
+      - checkout:
+          path: ~/single-page-shop
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
