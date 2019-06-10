@@ -1,3 +1,3 @@
-- start the server
+- start the back server
 - `yarn start`
 - follow the instruction on the screen
