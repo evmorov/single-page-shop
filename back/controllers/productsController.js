@@ -30,8 +30,7 @@ const update = async (req, res) => {
 };
 
 const destroy = async (req, res) => {
-  const product = await Product.findById(req.params.id).orFail();
-  product.remove();
+  const product = await Product.findByIdAndDelete(req.params.id).orFail();
   res.json(product);
 };
 
