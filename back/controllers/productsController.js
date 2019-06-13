@@ -13,7 +13,7 @@ const create = async (req, res) => {
 
 const show = async (req, res) => {
   const product = await Product.findById(req.params.id).orFail();
-  res.status(200).json(product);
+  res.json(product);
 };
 
 const update = async (req, res) => {
