@@ -52,11 +52,11 @@ describe('Products', function() {
 
   describe('#POST /products/', function() {
     context('empty request', function() {
-      it('returns 400 and empty body', async function() {
+      it('returns 422 and empty body', async function() {
         const res = await request(app).post('/products').send({});
 
-        expect(res.statusCode).to.equal(400);
-        expect(res.body).to.deep.equal({});
+        expect(res.statusCode).to.equal(422);
+        expect(res.body).to.have.property('errors'); // TODO: check validation errors
         expect(await Product.find()).to.be.empty;
       });
     });
@@ -91,10 +91,10 @@ describe('Products', function() {
 
   describe('#GET /products/:id', function() {
     context('not valid id', function() {
-      it('returns 400 and empty body', async function() {
-        const res = await request(app).get('/products/1');
+      it('returns 404 and empty body', async function() {
+        const res = await request(app).get('/products/not-valid');
 
-        expect(res.statusCode).to.equal(400);
+        expect(res.statusCode).to.equal(404);
         expect(res.body).to.deep.equal({});
       });
     });
@@ -135,10 +135,10 @@ describe('Products', function() {
     });
 
     context('not valid id', function() {
-      it('returns 400 and empty body', async function() {
-        const res = await request(app).get('/products/1');
+      it('returns 404 and empty body', async function() {
+        const res = await request(app).get('/products/not-valid');
 
-        expect(res.statusCode).to.equal(400);
+        expect(res.statusCode).to.equal(404);
         expect(res.body).to.deep.equal({});
       });
     });
@@ -153,11 +153,11 @@ describe('Products', function() {
     });
 
     context('empty request', function() {
-      it('returns 400 and empty body', async function() {
+      it('returns 422 and empty body', async function() {
         const res = await request(app).put(`/products/${product._id}`).send({});
 
-        expect(res.statusCode).to.equal(400);
-        expect(res.body).to.deep.equal({});
+        expect(res.statusCode).to.equal(422);
+        expect(res.body).to.have.property('errors'); // TODO: check validation errors
         expect(await Product.countDocuments()).to.equal(1);
       });
     });
@@ -193,10 +193,10 @@ describe('Products', function() {
 
   describe('#DELETE /products/:id', function() {
     context('not valid id', function() {
-      it('returns 400 and empty body', async function() {
-        const res = await request(app).delete('/products/1');
+      it('returns 404 and empty body', async function() {
+        const res = await request(app).delete('/products/not-valid');
 
-        expect(res.statusCode).to.equal(400);
+        expect(res.statusCode).to.equal(404);
         expect(res.body).to.deep.equal({});
       });
     });
